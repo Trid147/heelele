@@ -1,0 +1,53 @@
+{
+    "vkontakte": {
+        "url": "https://vk.ru/{username}",
+        "error_type": "status_code"
+    },
+    "github": {
+        "url": "https://github.com/{username}",
+        "error_type": "status_code"
+    },
+    "telegram": {
+        "url": "https://t.me/{username}",
+        "error_type": "success_text",
+        "success_text": "tgme_page_title"
+    },
+    "odnoklassniki": {
+        "url": "https://ok.ru/profile/{username}",
+        "error_type": "status_code"
+    },
+    "youtube": {
+        "url": "https://www.youtube.com/@{username}",
+        "error_type": "status_code"
+    },
+    "codeforces": {
+        "url": "https://codeforces.com/profile/{username}",
+        "error_type": "redirect"
+    },
+    "instagram": {
+        "url": "https://www.instagram.com/{username}",
+        "error_type": "success_text",
+        "success_text": "og:description"
+    },
+    "facebook": {
+        "url": "https://www.facebook.com/{username}",
+        "error_type": "success_text",
+        "success_text": "og:title"
+    },
+    "habr": {
+        "url": "https://habr.com/en/users/{username}",
+        "error_type": "status_code"
+    },
+    "pikabu": {
+        "url": "https://pikabu.ru/@{username}",
+        "error_type": "status_code"
+    },
+    "kwork": {
+        "url": "https://kwork.com/user/{username}",
+        "error_type": "status_code"
+    },
+    "vc_ru": {
+        "url": "https://vc.ru/{username}",
+        "error_type": "status_code"
+    }
+}
