@@ -1,19 +1,22 @@
 #!/usr/bin/env python3
 import asyncio
+from colorama import Fore, init
 from scanner import scan_username
 from loading import loading
+
+init(autoreset=True)
 
 @loading
 async def scan_with_loading(username):
     return await scan_username(username)
 
 async def main():
-    print('Welcome to heelele!')
+    print(Fore.GREEN + 'Welcome to heelele!')
     username = str(input('Enter a username: '))
 
     found_profiles = await scan_with_loading(username)
 
-    print('Results:')
+    print(Fore.GREEN + 'Results:')
 
     if not found_profiles:
         print('Nothing found.')

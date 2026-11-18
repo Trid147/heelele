@@ -49,5 +49,21 @@
     "vc_ru": {
         "url": "https://vc.ru/{username}",
         "error_type": "status_code"
+    },
+    "drive2": {
+        "url": "https://www.drive2.ru/users/{username}",
+        "error_type": "status_code"
+    },
+    "boosty": {
+        "url": "https://boosty.to/{username}",
+        "error_type": "status_code"
+    },
+    "dtf": {
+        "url": "https://dtf.ru/{username}",
+        "error_type": "status_code"
+    },
+    "twitter": {
+        "url": "https://x.com/{username}",
+        "error_type": "status_code"
     }
 }
