@@ -16,7 +16,7 @@ async def check_site(client: httpx.AsyncClient, semaphore: asyncio.Semaphore, si
         try:
             response = await client.get(url, follow_redirects=True)
 
-            success = {'site': site_name, 'url': url, 'status': 'Found'}
+            success = {'site': site_name, 'url': url, 'status': 'Found', 'username': username}
 
             if error_type == 'status_code':
                 if response.status_code == 200:
