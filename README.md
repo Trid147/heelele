@@ -14,15 +14,23 @@ Heelele instantly checks links with username inside existence on widely visited 
 * Work completely silently
 
 ## 🛠️ Installation
-### From GitHub
+### With pipx
 ```
-git clone https://github.com/trid147/heelele.git
+pipx install  git+https://github.com/trid147/heelele.git
+pipx ensurepath
+source ~/.bashrc
 ```
 
 ### With PyPI
 ```
 pip3 install heelele
 ```
+
+### From GitHub
+```
+git clone https://github.com/trid147/heelele.git
+```
+
 ## 🚀 Quick start
 Only Terminal and Python 3.10+ needed to start Heelele.
 
