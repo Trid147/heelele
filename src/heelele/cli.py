@@ -4,8 +4,8 @@ import argparse
 import itertools
 import sys
 from colorama import Fore, init
-from scanner import scan_username
-from mutations import generate_variations
+from heelele.modules.username.scanner import scan_username
+from heelele.modules.username.mutations import generate_variations
 
 init(autoreset=True)
 
@@ -43,5 +43,9 @@ async def main():
                     file.write(f'[+] {item['site']} ({item['username']}): {item['url']}\n')
             print(f'\n{Fore.YELLOW} Saved {len(found_profiles)} results to {args.output}')
 
-if __name__ == '__main__':
+#pyproject.toml specifies on this function only
+def entry_point():
     asyncio.run(main())
+
+if __name__ == '__main__':
+    entry_point()

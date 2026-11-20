@@ -2,11 +2,16 @@ import asyncio
 import json
 import httpx
 from typing import Callable, Dict, List
+from importlib import resources
 
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
     'Accept-Language': 'en-US,en;q=0.9'
 }
+
+def load_sites() -> dict:
+    data_file = resources.files('heelele.modules.username').joinpath('sites.json')
+    return json.loads(data_file.read_text(encoding='utf-8'))
 
 async def check_site(client: httpx.AsyncClient, semaphore: asyncio.Semaphore, site_name: str, site_data: dict, username: str) -> Dict | None:
     url = site_data['url'].format(username=username)
@@ -36,9 +41,8 @@ async def check_site(client: httpx.AsyncClient, semaphore: asyncio.Semaphore, si
     
     return None
 
-async def scan_username(usernames: List, sites_file: str = 'sites.json', on_progress: Callable[[int, int, int], None] | None = None) -> List[Dict]:
-    with open(sites_file, 'r', encoding='utf-8') as file:
-        sites = json.load(file)
+async def scan_username(usernames: List, on_progress: Callable[[int, int, int], None] | None = None) -> List[Dict]:
+    sites = load_sites()
 
     semaphore = asyncio.Semaphore(30)
     timeout = httpx.Timeout(5.0, connect=3.0)
