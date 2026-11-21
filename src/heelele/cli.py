@@ -14,6 +14,7 @@ async def main():
     parser.add_argument('username', help='Target username')
     parser.add_argument('-d', '--deep', action='store_true', help='Enables deep scan with mutations')
     parser.add_argument('-o', '--output', help='Saves found results to a file')
+    parser.add_argument('-m', '--metadata', action='store_true', help='Outputs web page metadata')
     args = parser.parse_args()
 
     print(Fore.GREEN + 'Welcome to heelele!\n')
@@ -29,7 +30,7 @@ async def main():
         sys.stdout.write(f'\r{Fore.CYAN}[{char}] Scanning: {completed}/{total} ({percent}%) | Found: {Fore.GREEN}{found_count}')
         sys.stdout.flush()
 
-    found_profiles = await scan_username(targets, on_progress=show_progress)
+    found_profiles = await scan_username(targets, on_progress=show_progress, extract=args.metadata)
     print('\n' + Fore.GREEN + 'Results:')
 
     if not found_profiles:
@@ -37,6 +38,9 @@ async def main():
     else:
         for item in found_profiles:
             print(f'{Fore.CYAN}[+] {item['site']} ({Fore.YELLOW}{item['username']}{Fore.CYAN}): {item['url']}')
+            if args.metadata:
+                for k, v in item.get('metadata', {}).items():
+                    print(f'    {Fore.YELLOW}↳ {k.capitalize()}: {Fore.WHITE}{v}')
         if args.output:
             with open(args.output, 'w', encoding='utf-8') as file:
                 for item in found_profiles:

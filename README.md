@@ -36,13 +36,14 @@ Only Terminal and Python 3.10+ needed to start Heelele.
 
 ## 🔰 Command example
 ```
-heelele superdude -d -o results.txt
+heelele superdude -d -m -o results.txt
 ```
 * `-d` - Deep scan
+* `-m` - Extract metadata
 * `-o results.txt` - Save results to a text file
 
 ## 📆 Future Roadmap
-* [ ] Metadata extraction
+* [x] Metadata extraction
 * [ ] Structured output formats
 * [ ] Proxy & Tor support
 * [ ] Avatar hash matching

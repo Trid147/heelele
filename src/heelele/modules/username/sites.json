@@ -1,11 +1,19 @@
 {
     "vkontakte": {
         "url": "https://vk.ru/{username}",
-        "error_type": "status_code"
+        "error_type": "status_code",
+        "extract": {
+            "name": "#HET_profile_name"
+        }
     },
     "github": {
         "url": "https://github.com/{username}",
-        "error_type": "status_code"
+        "error_type": "status_code",
+        "extract": {
+            "name": "span.p-name",
+            "bio": "div.p-note",
+            "location": "li[itemprop='homeLocation']"
+        }
     },
     "telegram": {
         "url": "https://t.me/{username}",
