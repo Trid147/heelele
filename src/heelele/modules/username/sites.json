@@ -3,7 +3,8 @@
         "url": "https://vk.ru/{username}",
         "error_type": "status_code",
         "extract": {
-            "name": "#HET_profile_name"
+            "name": "meta:og:title",
+            "bio": "meta:og:description"
         }
     },
     "github": {
@@ -12,30 +13,51 @@
         "extract": {
             "name": "span.p-name",
             "bio": "div.p-note",
-            "location": "li[itemprop='homeLocation']"
+            "location": "span.p-label"
         }
     },
     "telegram": {
         "url": "https://t.me/{username}",
         "error_type": "success_text",
-        "success_text": "tgme_page_title"
+        "success_text": "tgme_page_title",
+        "extract": {
+            "name": "div.tgme_page_title",
+            "description": "div.tgme_page_description"
+        }
     },
     "odnoklassniki": {
-        "url": "https://ok.ru/profile/{username}",
-        "error_type": "status_code"
+        "url": "https://ok.ru/{username}",
+        "error_type": "status_code",
+        "extract": {
+            "name": "span.anonym_user_head_title",
+            "location": "div.anonym_user_head_meta-text"
+        }
     },
     "youtube": {
         "url": "https://www.youtube.com/@{username}",
-        "error_type": "status_code"
+        "error_type": "status_code",
+        "extract": {
+            "name": "meta:og:title",
+            "bio": "meta:og:description"
+        }
     },
     "codeforces": {
-        "url": "https://codeforces.com/profile/{username}",
-        "error_type": "redirect"
+        "url": "https://codeforces.com/api/user.info?handles={username}",
+        "real_url": "https://codeforces.com/profile/{username}",
+        "error_type": "success_text",
+        "success_text": "\"status\":\"OK\"",
+        "extract": {
+            "first_name": "regex:\"firstName\":\"([^\"]+)\"",
+            "last_name": "regex:\"lastName\":\"([^\"]+)\"",
+            "city": "regex:\"city\":\"([^\"]+)\"",
+            "country": "regex:\"country\":\"([^\"]+)\"",
+            "rank": "regex:\"rank\":\"([^\"]+)\""
+        }
     },
     "instagram": {
         "url": "https://www.instagram.com/{username}",
         "error_type": "success_text",
-        "success_text": "og:description"
+        "success_text": "og:title"
     },
     "facebook": {
         "url": "https://www.facebook.com/{username}",
@@ -44,34 +66,116 @@
     },
     "habr": {
         "url": "https://habr.com/en/users/{username}",
-        "error_type": "status_code"
+        "error_type": "status_code",
+        "extract": {
+            "karma": "span.tm-votes-lever__score-counter"
+        }
     },
     "pikabu": {
         "url": "https://pikabu.ru/@{username}",
-        "error_type": "status_code"
+        "error_type": "status_code",
+        "extract": {
+            "about": "div.profile__user-about",
+            "information": "div.profile__user-information"
+        }
     },
     "kwork": {
         "url": "https://kwork.com/user/{username}",
-        "error_type": "status_code"
+        "error_type": "status_code",
+        "extract": {
+            "name": "div.user-fullname",
+            "profession": "div.break-word.user-profession",
+            "location": "div.user-info__location"
+        }
     },
     "vc_ru": {
         "url": "https://vc.ru/{username}",
-        "error_type": "status_code"
+        "error_type": "status_code",
+        "extract": {
+            "name": "div.subsite-card__name",
+            "description": "div.subsite-card__description"
+        }
     },
     "drive2": {
         "url": "https://www.drive2.ru/users/{username}",
-        "error_type": "status_code"
+        "error_type": "status_code",
+        "extract": {
+            "name": "div.c-user__name",
+            "location": "span[itemprop='address']"
+        }
     },
     "boosty": {
         "url": "https://boosty.to/{username}",
-        "error_type": "status_code"
+        "error_type": "status_code",
+        "extract": {
+            "name": "div.UserNameWithBadge-scss--module_root_uw55H"
+        }
     },
     "dtf": {
         "url": "https://dtf.ru/{username}",
-        "error_type": "status_code"
+        "error_type": "status_code",
+        "extract": {
+            "name": "div.subsite-card__name",
+            "description": "div.subsite-card__description"
+        }
     },
     "twitter": {
         "url": "https://x.com/{username}",
-        "error_type": "status_code"
+        "error_type": "status_code",
+        "extract": {
+            "name": "span.css-1jxf684"
+        }
+    },
+    "reddit": {
+        "url": "https://reddit.com/user/{username}/about.json",
+        "real_url": "https://reddit.com/user/{username}",
+        "error_type": "error_text",
+        "error_text": "\"error\":\"404\"",
+        "extract": {
+            "name": "regex:\"subreddit\":\\s*\\{[^}]*\"title\":\\s*\"([^\"]+)\"",
+            "bio": "regex:\"public_description\":\\s*\"([^\"]+)\""
+        }
+    },
+    "snapchat": {
+        "url": "https://www.snapchat.com/@{username}",
+        "error_type": "status_code",
+        "extract": {
+            "name": "span.UserDetailsCard_title__K9Awz"
+        }
+    },
+    "pinterest": {
+        "url": "https://www.pinterest.com/{username}",
+        "error_type": "success_text",
+        "success_text": "profile:username",
+        "extract": {
+            "name": "meta:og:title",
+            "bio": "meta:og:description"
+        }
+    },
+    "threads": {
+        "url": "https://www.threads.com/@{username}",
+        "error_type": "success_text",
+        "success_text": "og:description",
+        "extract": {
+            "name": "meta:og:title",
+            "bio": "meta:og:description"
+        }
+    },
+    "linkedin": {
+        "url": "https://www.linkedin.com/in/{username}",
+        "error_type": "status_code",
+        "extract": {
+            "name": "meta:og:title",
+            "bio": "meta:og:description"
+        }
+    },
+    "tiktok": {
+        "url": "https://www.tiktok.com/oembed?url=https%3A%2F%2Fwww.tiktok.com%2F%40{username}",
+        "real_url": "https://www.tiktok.com/@{username}",
+        "error_type": "success_text",
+        "success_text": "\"author_name\":",
+        "extract": {
+            "name": "regex:\"author_name\":\"([^\"]+)\""
+        }
     }
 }

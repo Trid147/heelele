@@ -18,6 +18,7 @@ def load_sites() -> dict:
 async def check_site(client: httpx.AsyncClient, semaphore: asyncio.Semaphore, site_name: str, site_data: dict, username: str, extract: bool = False) -> Dict | None:
     url = site_data['url'].format(username=username)
     error_type = site_data.get('error_type', 'status_code')
+    real_url = site_data.get('real_url', None)
 
     async with semaphore:
         try:
@@ -41,6 +42,7 @@ async def check_site(client: httpx.AsyncClient, semaphore: asyncio.Semaphore, si
 
             if found:
                 metadata = extract_metadata(response.text, site_data.get('extract', {})) if extract else {}
+                if real_url: url = site_data['real_url'].format(username=username)
                 return {'site': site_name, 'url': url, 'status': 'Found', 'username': username, "metadata": metadata}
 
         except httpx.RequestError:
