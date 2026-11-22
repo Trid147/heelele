@@ -20,6 +20,8 @@ def generate_variations(username: str) -> List:
         f'{base}228',
         f'{base}777',
         f'{base}666',
+        f'{base}3310',
+        f'{base}_3310',
         f'the_{base}',
         f'real_{base}',
         f'im_{base}',
@@ -29,7 +31,8 @@ def generate_variations(username: str) -> List:
         f'{base}_ru',
         f'{base}_tv',
         f'{base}_play',
-        f'{base}_exe'
+        f'{base}_exe',
+        f'{base}_doe'
     ]
     variations.update(common_affixes)
 

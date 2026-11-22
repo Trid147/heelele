@@ -56,7 +56,7 @@ async def scan_username(usernames: List, on_progress: Callable[[int, int, int], 
     semaphore = asyncio.Semaphore(30)
     timeout = httpx.Timeout(5.0, connect=3.0)
 
-    async with httpx.AsyncClient(headers=HEADERS, timeout=timeout, http2=True) as client:
+    async with httpx.AsyncClient(headers=HEADERS, timeout=timeout) as client:
         tasks = [check_site(client, semaphore, name, data, username, extract) for username in usernames for name, data in sites.items()]
 
         total = len(tasks)

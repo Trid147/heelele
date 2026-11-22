@@ -4,6 +4,7 @@ import argparse
 import itertools
 import sys
 from colorama import Fore, init
+from pathlib import Path
 from heelele.modules.username.scanner import scan_username
 from heelele.modules.username.mutations import generate_variations
 
@@ -11,17 +12,41 @@ init(autoreset=True)
 
 async def main():
     parser = argparse.ArgumentParser(description='Heelele - Username Search OSINT Tool')
-    parser.add_argument('username', help='Target username')
+    parser.add_argument('username', nargs='?', help='Target username')
+    parser.add_argument('--wordlist', help='Path to a wordlist file')
     parser.add_argument('-d', '--deep', action='store_true', help='Enables deep scan with mutations')
     parser.add_argument('-o', '--output', help='Saves found results to a file')
     parser.add_argument('-m', '--metadata', action='store_true', help='Outputs web page metadata')
     args = parser.parse_args()
 
-    print(Fore.GREEN + 'Welcome to heelele!\n')
-    username = args.username
-    deep = args.deep
+    if not args.username and not args.wordlist:
+        print(Fore.RED + 'Error: Provide a username or --wordlist!')
+        return
 
-    targets = generate_variations(username) if deep else [username]
+    print(Fore.GREEN + 'Welcome to heelele!\n')
+
+    targets = []
+
+    if args.username:
+        targets.append(args.username.strip())
+
+    if args.wordlist:
+        wordlist = Path(args.wordlist)
+        if not wordlist.is_file():
+            print(Fore.RED + f'Error: {wordlist} file not found.')
+            return
+
+        with open(wordlist, 'r', encoding='utf-8') as file:
+            targets.extend(line.strip() for line in file if line.strip())
+
+    if args.deep:
+        expanded = set()
+        for target in targets:
+            expanded.update(generate_variations(target))
+        targets = list(expanded)
+    else:
+        targets = list(dict.fromkeys(targets))
+
     spinner = itertools.cycle(r'\|/-')
 
     def show_progress(completed: int, total: int, found_count: int):
