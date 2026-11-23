@@ -3,8 +3,10 @@
         "url": "https://vk.ru/{username}",
         "error_type": "status_code",
         "extract": {
-            "name": "meta:og:title",
-            "bio": "meta:og:description"
+            "name": "regex:\"method\":\"users\\.get\"[\\s\\S]*?\"first_name\":\"([^\"]+)",
+            "last_name": "regex:\"method\":\"users\\.get\"[\\s\\S]*?\"last_name\":\"([^\"]+)",
+            "bio": "regex:\"method\":\"users\\.get\"[\\s\\S]*?\"owner_state\":\\{[^}]*?\"description\":\"([^\"]+)",
+            "location": "regex:\"method\":\"users\\.get\"[\\s\\S]*?\"city\":\\{[^}]*?\"title\":\"([^\"]+)"
         }
     },
     "github": {
@@ -192,8 +194,7 @@
         "success_text": "actual_persona_name",
         "extract": {
             "name": "span.actual_persona_name",
-            "bio": "meta:description",
-            "avatar": "meta:og:image"
+            "bio": "meta:description"
         }
     },
     "gravatar": {

@@ -3,10 +3,12 @@
 
 Heelele is a flexible, asynchronous, console-based Open Source Intelligence tool with a focus on the CIS space.
 
-## 📃 Summary
-*Fast, configurable username reconnaisance across many platforms.*
+![heelele](assets/demo.png)
 
-Heelele instantly checks links with username inside existence on widely visited in CIS sites and returns the results.
+## 📃 Summary
+*Fast, configurable username reconnaissance across many platforms.*
+
+Heelele instantly checks links with username inside existence on widely visited CIS sites and returns the results.
 
 **Heelele does:**
 * Retrieve information via asynchronous HTTP GET requests
@@ -15,19 +17,24 @@ Heelele instantly checks links with username inside existence on widely visited 
 
 ## 🛠️ Installation
 ### With pipx
-```
-pipx install  git+https://github.com/trid147/heelele.git
+```bash
+pipx install git+https://github.com/trid147/heelele.git
 pipx ensurepath
 source ~/.bashrc
 ```
 
-### With PyPI
+### Updating
+```bash
+pipx upgrade heelele
 ```
+
+### With PyPI *(Coming soon)*
+```bash
 pip3 install heelele
 ```
 
 ### From GitHub
-```
+```bash
 git clone https://github.com/trid147/heelele.git
 ```
 
@@ -35,16 +42,27 @@ git clone https://github.com/trid147/heelele.git
 Only Terminal and Python 3.10+ needed to start Heelele.
 
 ## 🔰 Command example
+
+### Basic scan
+```bash
+heelele superdude -m
 ```
-heelele superdude -d -m -o results.txt
+
+### Deep scan & Export to JSON
+```bash
+heelele superdude -d -m -o results.json
 ```
-* `-d` - Deep scan
-* `-m` - Extract metadata
-* `-o results.txt` - Save results to a text file
+
+### Help command
+```bash
+heelele --help
+```
+
+![heelele](assets/help.png)
 
 ## 📆 Future Roadmap
 * [x] Metadata extraction
-* [ ] Structured output formats
+* [x] Structured output formats
 * [ ] Proxy & Tor support
 * [ ] Avatar hash matching
 * [ ] Cyrillic-to-Latin transliteration

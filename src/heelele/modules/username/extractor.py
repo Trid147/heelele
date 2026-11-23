@@ -26,6 +26,7 @@ def extract_metadata(html: str, rules: Dict[str, str]) -> Dict[str, str]:
                 value = match.group(1) if match.groups else match.group(0)
                 if value.strip():
                     extracted[field] = value
+                    
         else:
             node = tree.css_first(selector)
             if node:

@@ -7,6 +7,7 @@ from colorama import Fore, init
 from pathlib import Path
 from heelele.modules.username.scanner import scan_username
 from heelele.modules.username.mutations import generate_variations
+from heelele.core.exporter import export_results
 
 init(autoreset=True)
 
@@ -14,6 +15,7 @@ async def main():
     parser = argparse.ArgumentParser(description='Heelele - Username Search OSINT Tool')
     parser.add_argument('username', nargs='?', help='Target username')
     parser.add_argument('--wordlist', help='Path to a wordlist file')
+    parser.add_argument('--format', choices=['txt', 'json', 'cvs'], help='Force output format')
     parser.add_argument('-d', '--deep', action='store_true', help='Enables deep scan with mutations')
     parser.add_argument('-o', '--output', help='Saves found results to a file')
     parser.add_argument('-m', '--metadata', action='store_true', help='Outputs web page metadata')
@@ -67,10 +69,8 @@ async def main():
                 for k, v in item.get('metadata', {}).items():
                     print(f'    {Fore.YELLOW}↳ {k.capitalize()}: {Fore.WHITE}{v}')
         if args.output:
-            with open(args.output, 'w', encoding='utf-8') as file:
-                for item in found_profiles:
-                    file.write(f'[+] {item['site']} ({item['username']}): {item['url']}\n')
-            print(f'\n{Fore.YELLOW} Saved {len(found_profiles)} results to {args.output}')
+            saved_fmt = export_results(found_profiles, args.output, args.format)
+            print(f'\n{Fore.YELLOW} Saved {len(found_profiles)} results to {args.output} ({saved_fmt})')
 
 #pyproject.toml specifies on this function only
 def entry_point():
