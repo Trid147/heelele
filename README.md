@@ -53,6 +53,17 @@ heelele superdude -m
 heelele superdude -d -m -o results.json
 ```
 
+### Scan with Tor
+```bash
+# Requires active Tor daemon or Tor Browser
+heelele superdude --tor
+```
+
+### Scan with proxy
+```bash
+heelele superdude --proxy http://127.0.0.1:8080
+```
+
 ### Help command
 ```bash
 heelele --help
@@ -63,7 +74,7 @@ heelele --help
 ## 📆 Future Roadmap
 * [x] Metadata extraction
 * [x] Structured output formats
-* [ ] Proxy & Tor support
+* [x] Proxy & Tor support
 * [ ] Avatar hash matching
 * [ ] Cyrillic-to-Latin transliteration
 * [ ] Phone number module

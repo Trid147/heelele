@@ -142,7 +142,7 @@
         "url": "https://www.snapchat.com/@{username}",
         "error_type": "status_code",
         "extract": {
-            "name": "span.UserDetailsCard_title__K9Awz"
+            "name": "meta:og:title"
         }
     },
     "pinterest": {
