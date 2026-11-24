@@ -18,7 +18,7 @@ def load_sites() -> dict:
 async def get_current_ip(proxy: str | None = None) -> str | None:
     try:
         async with httpx.AsyncClient(proxy=proxy, timeout=8.0) as client:
-            response = await client.get('https://ipify.org')
+            response = await client.get('https://api.ipify.org')
             if response.status_code == 200:
                 return response.text.strip()
     except httpx.RequestError:
@@ -30,7 +30,7 @@ async def detect_tor_proxy() -> str | None:
         proxy_url = f'socks5h://127.0.0.1:{port}'
         if await get_current_ip(proxy_url):
             return proxy_url
-        return None
+    return None
 
 async def check_site(client: httpx.AsyncClient, semaphore: asyncio.Semaphore, site_name: str, site_data: dict, username: str, extract: bool = False) -> Dict | None:
     url = site_data['url'].format(username=username)
@@ -72,7 +72,7 @@ async def scan_username(usernames: List, on_progress: Callable[[int, int, int], 
 
     semaphore = asyncio.Semaphore(30)
     timeout_value = 15.0 if proxy else 5.0
-    timeout = httpx.Timeout(timeout_value, connect=3.0)
+    timeout = httpx.Timeout(timeout_value, connect=10.0 if proxy else 3.0)
 
     async with httpx.AsyncClient(headers=HEADERS, timeout=timeout, proxy=proxy) as client:
         tasks = [check_site(client, semaphore, name, data, username, extract) for username in usernames for name, data in sites.items()]

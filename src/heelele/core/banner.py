@@ -5,7 +5,7 @@ BANNER = rf"""{Fore.CYAN}
  | | | | ___  ___| | ___| | ___ 
  | |_| |/ _ \/ _ \ |/ _ \ |/ _ \
  |  _  |  __/  __/ |  __/ |  __/
- |_| |_|\___|\___|_|\___|_|\___|  {Fore.YELLOW}v0.4.0{Style.RESET_ALL}
+ |_| |_|\___|\___|_|\___|_|\___|  {Fore.YELLOW}v0.4.1{Style.RESET_ALL}
  {Fore.GREEN}Async CIS OSINT Reconnaissance Tool{Style.RESET_ALL}
 """
 
