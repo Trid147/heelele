@@ -4,12 +4,12 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "heelele"
-version = "0.3.0"
+version = "0.4.0"
 description = "Async OSINT Swiss Army Knife focused on CIS platforms"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
-    "httpx[http2]>=0.27.0",
+    "httpx[http2,socks]>=0.27.0",
     "colorama>=0.4.6",
     "selectolax>=1.0.0",
 ]

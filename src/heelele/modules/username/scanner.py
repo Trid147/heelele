@@ -15,6 +15,23 @@ def load_sites() -> dict:
     data_file = resources.files('heelele.modules.username').joinpath('sites.json')
     return json.loads(data_file.read_text(encoding='utf-8'))
 
+async def get_current_ip(proxy: str | None = None) -> str | None:
+    try:
+        async with httpx.AsyncClient(proxy=proxy, timeout=8.0) as client:
+            response = await client.get('https://ipify.org')
+            if response.status_code == 200:
+                return response.text.strip()
+    except httpx.RequestError:
+        return None
+    return None
+
+async def detect_tor_proxy() -> str | None:
+    for port in (9050, 9150):
+        proxy_url = f'socks5h://127.0.0.1:{port}'
+        if await get_current_ip(proxy_url):
+            return proxy_url
+        return None
+
 async def check_site(client: httpx.AsyncClient, semaphore: asyncio.Semaphore, site_name: str, site_data: dict, username: str, extract: bool = False) -> Dict | None:
     url = site_data['url'].format(username=username)
     error_type = site_data.get('error_type', 'status_code')
@@ -50,13 +67,14 @@ async def check_site(client: httpx.AsyncClient, semaphore: asyncio.Semaphore, si
     
     return None
 
-async def scan_username(usernames: List, on_progress: Callable[[int, int, int], None] | None = None, extract: bool = False) -> List[Dict]:
+async def scan_username(usernames: List, on_progress: Callable[[int, int, int], None] | None = None, extract: bool = False, proxy: str | None = None) -> List[Dict]:
     sites = load_sites()
 
     semaphore = asyncio.Semaphore(30)
-    timeout = httpx.Timeout(5.0, connect=3.0)
+    timeout_value = 15.0 if proxy else 5.0
+    timeout = httpx.Timeout(timeout_value, connect=3.0)
 
-    async with httpx.AsyncClient(headers=HEADERS, timeout=timeout) as client:
+    async with httpx.AsyncClient(headers=HEADERS, timeout=timeout, proxy=proxy) as client:
         tasks = [check_site(client, semaphore, name, data, username, extract) for username in usernames for name, data in sites.items()]
 
         total = len(tasks)
